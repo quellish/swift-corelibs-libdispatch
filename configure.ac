@@ -133,7 +133,7 @@ AC_ARG_WITH([apple-xnu-source],
   apple_xnu_source_libkern_path=${withval}/libkern
   apple_xnu_source_bsd_path=${withval}/bsd
   apple_xnu_source_osfmk_path=${withval}/osfmk
-  CPPFLAGS="$CPPFLAGS -idirafter $apple_xnu_source_libkern_path -isystem $apple_xnu_source_bsd_path -isystem $apple_xnu_source_libsyscall_path -isystem $apple_xnu_source_libproc_path "
+  CPPFLAGS="$CPPFLAGS -idirafter $apple_xnu_source_libkern_path -isystem $apple_xnu_source_bsd_path -isystem $apple_xnu_source_libsyscall_path -isystem $apple_xnu_source_libproc_path -isystem $apple_xnu_source_osfmk_path "
 ])
 
 AC_CACHE_CHECK([for System.framework/PrivateHeaders], dispatch_cv_system_privateheaders,
