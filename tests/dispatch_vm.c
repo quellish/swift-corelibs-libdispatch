@@ -40,7 +40,7 @@
 #include <bsdtests.h>
 #include "dispatch_test.h"
 
-#if defined(DISPATCH_SOURCE_TYPE_VM) && defined(NOTE_VM_PRESSURE)
+#if defined(DISPATCH_SOURCE_TYPE_MEMORYPRESSURE) && defined(NOTE_VM_PRESSURE)
 
 #if TARGET_OS_EMBEDDED
 #define ALLOC_SIZE ((size_t)(1024*1024*1ul))	// 1MB
@@ -128,8 +128,11 @@ main(void)
 	pages = calloc(max_page_count, sizeof(char*));
 
 	vm_queue = dispatch_queue_create("VM Pressure", NULL);
-	vm_source = dispatch_source_create(DISPATCH_SOURCE_TYPE_VM, 0,
-			DISPATCH_VM_PRESSURE, vm_queue);
+	vm_source = dispatch_source_create(DISPATCH_SOURCE_TYPE_MEMORYPRESSURE, 0,
+			(DISPATCH_MEMORYPRESSURE_NORMAL 
+			| DISPATCH_MEMORYPRESSURE_WARN 
+			| DISPATCH_MEMORYPRESSURE_CRITICAL),
+			vm_queue);
 	dispatch_source_set_event_handler(vm_source, ^{
 		if (!page_count) {
 			// Too much memory pressure already to start the test
@@ -187,13 +190,13 @@ main(void)
 	dispatch_main();
 	return 0;
 }
-#else //DISPATCH_SOURCE_TYPE_VM
+#else //DISPATCH_SOURCE_TYPE_MEMORYPRESSURE
 int
 main(void)
 {
 	dispatch_test_start("Dispatch VM Pressure test"
-			" - No DISPATCH_SOURCE_TYPE_VM");
+			" - No DISPATCH_SOURCE_TYPE_MEMORYPRESSURE");
 	test_stop();
 	return 0;
 }
-#endif //DISPATCH_SOURCE_TYPE_VM
+#endif //DISPATCH_SOURCE_TYPE_MEMORYPRESSURE
