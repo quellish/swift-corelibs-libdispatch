@@ -26,6 +26,8 @@
 #include <generic_unix_port.h>
 #endif
 
+#include <atomic.h>
+
 #define test_group_wait(g) do { \
 	if (dispatch_group_wait(g, dispatch_time(DISPATCH_TIME_NOW, \
 			25ull * NSEC_PER_SEC))) { \
