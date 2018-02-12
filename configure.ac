@@ -136,6 +136,13 @@ AC_ARG_WITH([apple-xnu-source],
   CPPFLAGS="$CPPFLAGS -idirafter $apple_xnu_source_libkern_path -isystem $apple_xnu_source_bsd_path -isystem $apple_xnu_source_libsyscall_path -isystem $apple_xnu_source_libproc_path -isystem $apple_xnu_source_osfmk_path "
 ])
 
+AC_ARG_WITH([apple-libsyscall-source],
+  [AS_HELP_STRING([--with-apple-libsyscall-source],
+    [Specify path to Apple libsyscall source])], [
+  apple_libsyscall_source_path=${withval}
+  CPPFLAGS="$CPPFLAGS -isystem $apple_libsyscall_source_path"
+])
+
 AC_CACHE_CHECK([for System.framework/PrivateHeaders], dispatch_cv_system_privateheaders,
   [AS_IF([test -d /System/Library/Frameworks/System.framework/PrivateHeaders],
     [dispatch_cv_system_privateheaders=yes], [dispatch_cv_system_privateheaders=no])]
